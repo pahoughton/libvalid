@@ -330,10 +330,12 @@ verify::file(
 	       bufByte < testf.gcount();
 	       bufByte++ ) {
 	    if( testBuf[ bufByte ] != expBuf[ bufByte ] ) {
-	      std::string reason("Data mismatch at byte ");
-	      reason += std::to_string(byte+bufByte);
+	      char reason[128];
+	      snprintf( reason, sizeof(reason),
+			"Data mismatch at byte %ld",
+			byte+bufByte );
 	      check( false, false, valid::unkexcption(), valid::timer(),
-		     reason.c_str(), srcFn, srcLine );
+		     reason, srcFn, srcLine );
 	      return( false );
 	    }
 	    // should not reach
